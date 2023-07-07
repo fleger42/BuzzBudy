@@ -7,4 +7,5 @@
     <color name="BlueGreen" >#45C4B0</color>
     <color name="Green" >#9AEBA3</color>
     <color name="GreenYellow" >#DAFDBA</color>
+    <color name="RedError" >#F44336</color>
 </resources>
