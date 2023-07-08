@@ -1,5 +1,6 @@
 package com.example.buzzbuddy
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,23 +17,24 @@ class MainActivity : AppCompatActivity() {
 
         val button_home = findViewById<Button>(R.id.button_home)
         val create_account = findViewById<TextView>(R.id.create_account)
-        val email = findViewById<EditText>(R.id.email)
-        val password = findViewById<EditText>(R.id.password)
+        val phone = findViewById<EditText>(R.id.phone)
+        val username = findViewById<EditText>(R.id.username)
         val error = findViewById<TextView>(R.id.error_text)
 
         button_home.setOnClickListener(View.OnClickListener {
-            error.visibility = View.INVISIBLE
+            error.visibility = View.GONE
             error.text = ""
-            var txtEmail = email.text.toString()
-            var txtPassword = password.text.toString()
-            if(txtEmail.isBlank() || txtPassword.isBlank())
+            var txtPhone = phone.text.toString()
+            var txtUsername = username.text.toString()
+            if(txtPhone.isBlank() || txtUsername.isBlank())
             {
                 error.visibility = View.VISIBLE
                 error.text = "Veuillez remplir tout les champs"
             }
             else
             {
-                Toast.makeText(this, "$txtEmail et $txtPassword", Toast.LENGTH_LONG).show()
+                val intentToHomeActivity = Intent(this, HomeActivity::class.java)
+                startActivity(intentToHomeActivity)
             }
         })
     }
