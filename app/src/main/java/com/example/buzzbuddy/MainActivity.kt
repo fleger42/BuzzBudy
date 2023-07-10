@@ -15,13 +15,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button_home = findViewById<Button>(R.id.button_home)
-        val create_account = findViewById<TextView>(R.id.create_account)
+        val buttonHome = findViewById<Button>(R.id.button_home)
         val phone = findViewById<EditText>(R.id.phone)
         val username = findViewById<EditText>(R.id.username)
         val error = findViewById<TextView>(R.id.error_text)
 
-        button_home.setOnClickListener(View.OnClickListener {
+        buttonHome.setOnClickListener(View.OnClickListener {
             error.visibility = View.GONE
             error.text = ""
             var txtPhone = phone.text.toString()

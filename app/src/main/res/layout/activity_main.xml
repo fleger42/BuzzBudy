@@ -38,18 +38,6 @@
         android:hint="n° de téléphone"
         android:paddingLeft="5dp" />
 
-    <TextView
-        android:id="@+id/error_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:text="Veuillez remplir tout les champs"
-        android:textColor="@color/RedError"
-        android:visibility="gone"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,24 +55,15 @@
             app:backgroundTint="@color/BlueGreen" />
 
         <TextView
-            android:id="@+id/create_account"
+            android:id="@+id/error_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="right"
-            android:padding="10dp"
-            android:text="Créer un compte ?"
-            android:textColor="@color/DarkBlueGreen"
-            android:textStyle="bold" />
+            android:layout_marginLeft="20dp"
+            android:text="Veuillez remplir tout les champs"
+            android:textColor="@color/RedError"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginBottom="13dp"
-        android:gravity="bottom"
-        android:text="Besoin d'aide ?"
-        android:textColor="@color/DarkBlueGreen"
-        android:textSize="20dp" />
 </LinearLayout>
