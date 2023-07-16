@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/item_add"
-        android:enabled="true"
-        android:icon="@drawable/ic_add"
-        android:onClick="onOptionsItemSelected"
-        android:title="Options"
-        app:showAsAction="always" />
+        android:id="@+id/contact_delete"
+        android:title="Delete contact" />
     <item
-        android:id="@+id/item_option"
-        android:enabled="true"
-        android:icon="@drawable/ic_settings"
-        android:onClick="onOptionsItemSelected"
-        android:title="Add"
-        app:showAsAction="always" />
+        android:id="@+id/contact_edit"
+        android:title="Edit contact" />
 </menu>

@@ -13,11 +13,15 @@
         android:theme="@style/Theme.BuzzBuddy"
         tools:targetApi="31">
         <activity
+            android:name=".EditContactActivity"
+            android:exported="false"
+            android:label="Edit"
+            android:parentActivityName=".HomeActivity"/>
+        <activity
             android:name=".OptionActivity"
             android:exported="false"
             android:label="Options"
-            android:parentActivityName=".HomeActivity"
-            />
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".AddContactActivity"
             android:exported="false"
@@ -31,6 +35,7 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false"
+            android:parentActivityName=".MainActivity"
             android:label="Accueil" />
         <activity
             android:name=".MainActivity"

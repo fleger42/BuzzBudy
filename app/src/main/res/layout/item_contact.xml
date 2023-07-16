@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/itemContact_image"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:src="@mipmap/ic_launcher_round"
@@ -16,34 +16,44 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/contact_name"
+        android:id="@+id/itemContact_lastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Contact 1"
+        android:layout_marginStart="8dp"
+        android:text="Leger"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/itemContact_firstName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/itemContact_firstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="16dp"
-        android:text="06 68 93 49 23"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/contact_name" />
+        android:layout_marginStart="24dp"
+        android:text="Florian"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/itemContact_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/itemContact_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="16dp"
         android:text="11:45"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/itemContact_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="06 68 93 49 23"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/itemContact_image"
+        app:layout_constraintTop_toBottomOf="@+id/itemContact_firstName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

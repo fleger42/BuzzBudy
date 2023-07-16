@@ -5,21 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.TextView
 
 class ContactAdapter(
     var mcontext: Context,
     var ressources: Int,
-    var values: ArrayList<String>
-): ArrayAdapter<String>(mcontext, ressources, values) {
+    var values: ArrayList<ContactDto>
+): ArrayAdapter<ContactDto>(mcontext, ressources, values) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-        val newName = values[position]
+        val contact = values[position]
         val view = LayoutInflater.from(mcontext).inflate(ressources, parent, false)
-        val contactName = view.findViewById<TextView>(R.id.contact_name)
 
-        contactName.text = newName
+        val firstName = view.findViewById<TextView>(R.id.itemContact_firstName)
+        var lastName = view.findViewById<TextView>(R.id.itemContact_lastName)
+        var image = view.findViewById<ImageView>(R.id.itemContact_image)
+        var phone = view.findViewById<TextView>(R.id.itemContact_phone)
+
+        firstName.text = contact.firstName
+        lastName.text = contact.lastName
+        image.setImageResource(contact.image)
+        phone.text = contact.phone
         return view
     }
 }
