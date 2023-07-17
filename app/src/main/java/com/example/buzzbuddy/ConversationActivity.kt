@@ -23,7 +23,7 @@ class ConversationActivity : AppCompatActivity() {
         phone = intent.getStringExtra("phone").toString()
 
         contactNameView.text = firstName
-        supportActionBar!!.title = firstName
+        supportActionBar!!.title = phone
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
