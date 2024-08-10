@@ -8,8 +8,10 @@ import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class ConversationActivity : AppCompatActivity() {
+    lateinit var db: BuzzBudyDatabase
     private var firstName = String()
     private var lastName = String()
     private var phone = String()
@@ -17,6 +19,8 @@ class ConversationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversation)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true);
+        db = BuzzBudyDatabase(this)
+
         val contactNameView = findViewById<TextView>(R.id.contact_name)
         firstName = intent.getStringExtra("first_name").toString()
         lastName = intent.getStringExtra("last_name").toString()
@@ -42,7 +46,11 @@ class ConversationActivity : AppCompatActivity() {
                 }
             }
             R.id.contact_delete -> {
-                Toast.makeText(this, "Need to put an alert confirmation", Toast.LENGTH_LONG).show()
+                val ret = db.deleteUser(phone)
+                Toast.makeText(this, ret, Toast.LENGTH_LONG).show()
+                Intent(this, HomeActivity::class.java).also {
+                    startActivity(it)
+                }
             }
             android.R.id.home -> {
                 onBackPressedDispatcher.onBackPressed();

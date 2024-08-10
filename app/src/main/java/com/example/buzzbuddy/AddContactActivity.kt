@@ -1,5 +1,6 @@
 package com.example.buzzbuddy
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
@@ -8,13 +9,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.buzzbuddy.data.UserDto
+import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class AddContactActivity : AppCompatActivity() {
+    lateinit var db: BuzzBudyDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_contact)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
+        db = BuzzBudyDatabase(this)
         val firstNameView = findViewById<EditText>(R.id.add_contact_firstname)
         val lastNameView = findViewById<EditText>(R.id.add_contact_lastname)
         val phoneFieldView = findViewById<EditText>(R.id.add_contact_phonefield)
@@ -38,9 +43,23 @@ class AddContactActivity : AppCompatActivity() {
                 errorView.visibility = View.VISIBLE
                 errorView.text = "Veuillez entrer un numéro de téléphone valide."
             }
+            else if(db.findUser(phoneFieldText) != null)
+            {
+                errorView.visibility = View.VISIBLE
+                errorView.text = "Vous avez déjà ajouté ce numéro de téléphone."
+            }
             else
             {
-                Toast.makeText(this, "First name:$firstNameText Last name:$lastNameText Phone number:$phoneFieldText", Toast.LENGTH_LONG).show()
+                val user = UserDto(firstNameText, lastNameText, phoneFieldText)
+                val isInserted = db.addUser(user)
+
+                if(isInserted)
+                    Toast.makeText(this, "Insert success", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this, "Failed to add user", Toast.LENGTH_SHORT).show()
+                Intent(this, HomeActivity::class.java).also {
+                    startActivity(it)
+                }
             }
         }
     }

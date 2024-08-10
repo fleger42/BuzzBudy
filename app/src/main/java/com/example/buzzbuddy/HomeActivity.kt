@@ -4,28 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AdapterView
-import android.widget.AdapterView.AdapterContextMenuInfo
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.buzzbuddy.adapter.ContactAdapter
+import com.example.buzzbuddy.data.UserDto
+import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class HomeActivity : AppCompatActivity() {
-    private var contactArray = ArrayList<ContactDto>()
+    lateinit var db: BuzzBudyDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        db = BuzzBudyDatabase(this)
 
         val listContact = findViewById<ListView>(R.id.list_contact)
-        var contactArray = arrayListOf(
-            ContactDto("Florian", "Leger", R.drawable.buzzbuddy_logo, "0767874585"),
-            ContactDto("Justine", "Giroix", R.drawable.buzzbuddy_logo, "0767874585"),
-            ContactDto("Paul","Correia", R.drawable.buzzbuddy_logo, "0767874585"),
-            ContactDto("Hugo", "Lentin", R.drawable.buzzbuddy_logo, "0767874585"),
-            ContactDto("Anis", "Remili", R.drawable.buzzbuddy_logo, "0767874585"),
-            ContactDto("Amine", "Doghmane", R.drawable.buzzbuddy_logo, "0767874585"),
-            ContactDto("Charli", "Huchard", R.drawable.buzzbuddy_logo, "0767874585")
-        )
+        var contactArray = db.getAllUsers()
         val adapter = ContactAdapter(this, R.layout.item_contact, contactArray)
 
         listContact.adapter = adapter
@@ -33,9 +28,9 @@ class HomeActivity : AppCompatActivity() {
         listContact.setOnItemClickListener { adapterView, view, i, l ->
             val clickContact = contactArray[i]
             Intent(this, ConversationActivity::class.java).also {
-                it.putExtra("first_name", clickContact.firstName)
-                it.putExtra("last_name", clickContact.lastName)
-                it.putExtra("phone", clickContact.phone)
+                it.putExtra("first_name", clickContact.user_first_name)
+                it.putExtra("last_name", clickContact.user_last_name)
+                it.putExtra("phone", clickContact.user_phone)
                 startActivity(it)
             }
         }
