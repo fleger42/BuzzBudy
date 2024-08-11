@@ -1,13 +1,15 @@
 package com.example.buzzbuddy
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.buzzbuddy.adapter.ContactAdapter
-import com.example.buzzbuddy.data.UserDto
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class HomeActivity : AppCompatActivity() {
@@ -16,8 +18,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         db = BuzzBudyDatabase(this)
+        val color = ColorDrawable(db.getHeaderColor())
+        supportActionBar!!.setBackgroundDrawable(color)
 
         val listContact = findViewById<ListView>(R.id.list_contact)
         var contactArray = db.getAllUsers()
@@ -52,11 +55,13 @@ class HomeActivity : AppCompatActivity() {
                     startActivity(it)
                 }
             }
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed();
-                return true;
-            }
         }
         return true
     }
+    override fun onBackPressed() {
+        if (false) {
+            super.onBackPressed();
+        }
+    }
+
 }

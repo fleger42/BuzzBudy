@@ -1,6 +1,7 @@
 package com.example.buzzbuddy
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar!!.hide()
         db = BuzzBudyDatabase(this)
+
+        if(db.checkLogin() != null)
+        {
+            val intentToHomeActivity = Intent(this, HomeActivity::class.java)
+            startActivity(intentToHomeActivity)
+        }
         val buttonHome = findViewById<Button>(R.id.button_home)
         val phone = findViewById<EditText>(R.id.phone)
         val error = findViewById<TextView>(R.id.error_text)
@@ -41,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             }
             else
             {
+                db.firstLogin(phoneField.text.toString())
                 val intentToHomeActivity = Intent(this, HomeActivity::class.java)
                 phoneField.text = ""
                 startActivity(intentToHomeActivity)

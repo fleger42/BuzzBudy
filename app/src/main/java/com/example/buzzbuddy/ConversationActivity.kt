@@ -1,6 +1,7 @@
 package com.example.buzzbuddy
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class ConversationActivity : AppCompatActivity() {
@@ -18,8 +20,10 @@ class ConversationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversation)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true);
         db = BuzzBudyDatabase(this)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true);
+        val color = ColorDrawable(db.getHeaderColor())
+        supportActionBar!!.setBackgroundDrawable(color)
 
         val contactNameView = findViewById<TextView>(R.id.contact_name)
         firstName = intent.getStringExtra("first_name").toString()

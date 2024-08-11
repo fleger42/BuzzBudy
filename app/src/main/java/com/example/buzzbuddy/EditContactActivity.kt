@@ -1,6 +1,7 @@
 package com.example.buzzbuddy
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.buzzbuddy.data.UserDto
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
@@ -17,8 +19,10 @@ class EditContactActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_contact)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         db = BuzzBudyDatabase(this)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val color = ColorDrawable(db.getHeaderColor())
+        supportActionBar!!.setBackgroundDrawable(color)
 
         val firstNameView = findViewById<TextView>(R.id.edit_contact_firstname)
         val lastNameView = findViewById<TextView>(R.id.edit_contact_lastname)
