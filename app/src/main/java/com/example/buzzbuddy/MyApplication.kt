@@ -6,7 +6,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 class MyApplication : Application() {
 
     private val lifecycleListener: SampleLifecycleListener by lazy {
-        SampleLifecycleListener()
+        SampleLifecycleListener(this)
     }
 
     override fun onCreate() {

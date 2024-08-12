@@ -40,6 +40,17 @@ class BuzzBudyDatabase(mContext: Context) : SQLiteOpenHelper(
 
     }
 
+    fun editLastLog(time: Long): Boolean
+    {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DATA_LAST_LOG, time)
+
+        val result = db.update(DATA_TABLE_NAME, values, "$DATA_ID=?", arrayOf("1")).toInt()
+        db.close()
+        return result != -1
+    }
+
     fun editColor(color: Int): Boolean
     {
         val db = this.writableDatabase
@@ -49,6 +60,19 @@ class BuzzBudyDatabase(mContext: Context) : SQLiteOpenHelper(
         val result = db.update(DATA_TABLE_NAME, values, "$DATA_ID=?", arrayOf("1")).toInt()
         db.close()
         return result != -1
+    }
+
+    fun getLastLog(): Long {
+        var time: Long = 0
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $DATA_TABLE_NAME"
+        val cursor = db.rawQuery(selectQuery, null)
+        if(cursor != null)
+            if(cursor.moveToFirst()) {
+                time = cursor.getLong(cursor.getColumnIndexOrThrow(DATA_LAST_LOG))
+            }
+        db.close()
+        return time
     }
 
     fun getHeaderColor(): Int {
