@@ -3,11 +3,8 @@ package com.example.buzzbuddy
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.buzzbuddy.db.BuzzBudyDatabase
-
 
 class OptionActivity : AppCompatActivity() {
     lateinit var db: BuzzBudyDatabase
@@ -43,4 +40,5 @@ class OptionActivity : AppCompatActivity() {
             }
         }
     }
+
 }

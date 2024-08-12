@@ -19,7 +19,7 @@ class SampleLifecycleListener(private val context: Context) : DefaultLifecycleOb
         }
 
         val year = calendar.time
-        Toast.makeText(context, "Last log: $year", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "$year", Toast.LENGTH_SHORT).show()
     }
 
     override fun onStop(owner: LifecycleOwner) {

@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">BuzzBuddy</string>
+    <string name="title_activity_conversation">Conversation</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="welcome_eng">Welcome</string>
+    <string name="empty_field">You need to fill every field.</string>
+    <string name="valid_phone">You need to enter a valid phone number.</string>
+    <string name="already_added_phone">You have already added this phone number.</string>
+    <string name="insert_phone">Please enter your phone number.</string>
+    <string name="edit_contact">Edit contact</string>
+    <string name="delete_contact">Delete contact</string>
+    <string name="home_enter_phone">Enter phone number</string>
+    <string name="phone_hint">Phone number</string>
+    <string name="button_next">Next</string>
+    <string name="information_privacy">We will never sell your informations.</string>
+    <string name="firstname">Firstname</string>
+    <string name="lastname">Lastname</string>
+    <string name="phone">Phone</string>
+    <string name="register">Register</string>
+    <string name="add_contact">Add contact</string>
+    <string name="edit">Edit</string>
+    <string name="conversation">Conversation</string>
+    <string name="home">Home</string>
+</resources>

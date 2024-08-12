@@ -16,7 +16,7 @@
         <activity
             android:name=".EditContactActivity"
             android:exported="false"
-            android:label="Edit"
+            android:label="@string/edit"
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".OptionActivity"
@@ -26,17 +26,17 @@
         <activity
             android:name=".AddContactActivity"
             android:exported="false"
-            android:label="Add contact"
+            android:label="@string/add_contact"
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".ConversationActivity"
             android:exported="false"
-            android:label="Conversation"
+            android:label="@string/conversation"
             android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".HomeActivity"
             android:exported="false"
-            android:label="Accueil"
+            android:label="@string/home"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"

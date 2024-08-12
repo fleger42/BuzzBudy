@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.telephony.PhoneNumberUtils
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.example.buzzbuddy.data.UserDto
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
@@ -46,13 +44,13 @@ class EditContactActivity : AppCompatActivity() {
 
             if (firstNameText.isBlank() || lastNameText.isBlank() || phoneFieldText.isBlank()) {
                 errorView.visibility = View.VISIBLE
-                errorView.text = "Veuillez remplir tout les champs."
+                errorView.text = getString(R.string.empty_field)
             } else if (!PhoneNumberUtils.isGlobalPhoneNumber(phoneFieldText)) {
                 errorView.visibility = View.VISIBLE
-                errorView.text = "Veuillez entrer un numéro de téléphone valide."
+                errorView.text = getString(R.string.valid_phone)
             } else if (savePhoneNumber != phoneFieldText && db.findUser(phoneFieldText) != null) {
                 errorView.visibility = View.VISIBLE
-                errorView.text = "Vous avez déjà ajouté ce numéro de téléphone."
+                errorView.text = getString(R.string.already_added_phone)
             } else {
                 val user = UserDto(changedUserId, firstNameText, lastNameText, phoneFieldText)
                 val isInserted = db.updateUser(user)

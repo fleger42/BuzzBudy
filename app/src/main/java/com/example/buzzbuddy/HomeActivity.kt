@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.buzzbuddy.adapter.ContactAdapter
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 

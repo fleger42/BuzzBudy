@@ -37,12 +37,12 @@ class MainActivity : AppCompatActivity() {
             if(txtPhone.isBlank())
             {
                 error.visibility = View.VISIBLE
-                error.text = "Veuillez renseigner votre numéro de téléphone."
+                error.text = getString(R.string.insert_phone)
             }
             else if(!PhoneNumberUtils.isGlobalPhoneNumber(phoneField.text.toString()))
             {
                 error.visibility = View.VISIBLE
-                error.text = "Veuillez entrer un numéro de téléphone valide."
+                error.text = getString(R.string.valid_phone)
             }
             else
             {

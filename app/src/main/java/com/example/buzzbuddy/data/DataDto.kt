@@ -1,8 +1,5 @@
 package com.example.buzzbuddy.data
-private const val DATA_ID = "data_id"
-private const val DATA_PHONE = "data_phone"
-private const val DATA_LAST_LOG = "data_last_log"
-private const val DATA_HEADER_COLOR = "data_header_color"
+
 data class DataDto(
     var data_phone: String,
     var data_last_log: Long,

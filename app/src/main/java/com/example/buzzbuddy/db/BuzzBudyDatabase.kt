@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Color
 import com.example.buzzbuddy.data.DataDto
 import com.example.buzzbuddy.data.UserDto
-import com.google.firebase.firestore.auth.User
 import java.util.GregorianCalendar
 
 

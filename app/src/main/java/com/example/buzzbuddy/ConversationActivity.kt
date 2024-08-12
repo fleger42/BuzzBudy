@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class ConversationActivity : AppCompatActivity() {
@@ -51,7 +49,6 @@ class ConversationActivity : AppCompatActivity() {
             }
             R.id.contact_delete -> {
                 val ret = db.deleteUser(phone)
-                Toast.makeText(this, ret, Toast.LENGTH_LONG).show()
                 Intent(this, HomeActivity::class.java).also {
                     startActivity(it)
                 }
