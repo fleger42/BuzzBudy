@@ -23,7 +23,7 @@ class ConversationActivity : AppCompatActivity() {
         val color = ColorDrawable(db.getHeaderColor())
         supportActionBar!!.setBackgroundDrawable(color)
 
-        val contactNameView = findViewById<TextView>(R.id.contact_name)
+        val contactNameView = findViewById<TextView>(R.id.phoneText)
         firstName = intent.getStringExtra("first_name").toString()
         lastName = intent.getStringExtra("last_name").toString()
         phone = intent.getStringExtra("phone").toString()

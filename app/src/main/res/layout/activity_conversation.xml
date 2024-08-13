@@ -1,61 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ConversationActivity">
 
-    <TextView
-        android:id="@+id/contact_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="27dp"
-        android:text="contactName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="30dp"
-        />
+        <TextView
+            android:id="@+id/phoneText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0767874585"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="20dp"
+            android:gravity="right"
+            android:layout_alignParentTop="true"
+            />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="0dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/charRecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut magna risus, tincidunt et ultrices in, congue vitae purus. Integer luctus vulputate condimentum. Curabitur ultrices mi nisl, vitae consectetur diam luctus id. Aliquam faucibus augue eget iaculis ullamcorper. Duis ultrices metus nisi, ut dictum ipsum cursus non. Praesent id quam dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sem dolor, tristique in faucibus quis, pulvinar quis purus. Suspendisse tempor lectus non lacus consequat pulvinar. Vestibulum efficitur lacus risus, aliquet consectetur erat fringilla quis."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contact_name" />
+        android:layout_above="@id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut magna risus, tincidunt et ultrices in, congue vitae purus. Integer luctus vulputate condimentum. Curabitur ultrices mi nisl, vitae consectetur diam luctus id. Aliquam faucibus augue eget iaculis ullamcorper. Duis ultrices metus nisi, ut dictum ipsum cursus non. Praesent id quam dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sem dolor, tristique in faucibus quis, pulvinar quis purus. Suspendisse tempor lectus non lacus consequat pulvinar. Vestibulum efficitur lacus risus, aliquet consectetur erat fringilla quis."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="100"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/linearLayout"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut magna risus, tincidunt et ultrices in, congue vitae purus. Integer luctus vulputate condimentum. Curabitur ultrices mi nisl, vitae consectetur diam luctus id. Aliquam faucibus augue eget iaculis ullamcorper. Duis ultrices metus nisi, ut dictum ipsum cursus non. Praesent id quam dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sem dolor, tristique in faucibus quis, pulvinar quis purus. Suspendisse tempor lectus non lacus consequat pulvinar. Vestibulum efficitur lacus risus, aliquet consectetur erat fringilla quis."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            <EditText
+                android:id="@+id/messageBox"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="100"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:background="@drawable/message_box_background"
+                android:hint="Type a message" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_send"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                ></ImageView>
+        </LinearLayout>
+
+</RelativeLayout>
