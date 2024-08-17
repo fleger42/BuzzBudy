@@ -29,6 +29,7 @@ class ContactAdapter(
         firstName.text = contact.user_first_name
         lastName.text = contact.user_last_name
         phone.text = contact.user_phone
+        image.setImageResource(R.mipmap.bunny_icon)
         return view
     }
 }

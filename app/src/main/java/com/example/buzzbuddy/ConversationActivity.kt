@@ -1,20 +1,41 @@
 package com.example.buzzbuddy
 
+import android.app.Activity
+import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.buzzbuddy.adapter.MessageAdapter
+import com.example.buzzbuddy.data.MessageDto
 import com.example.buzzbuddy.db.BuzzBudyDatabase
+
 
 class ConversationActivity : AppCompatActivity() {
     lateinit var db: BuzzBudyDatabase
     private var firstName = String()
     private var lastName = String()
     private var phone = String()
+    private lateinit var MessageRecyclerView: RecyclerView
+    private lateinit var messageBox: EditText
+    private lateinit var sendButton: ImageView
+    private lateinit var messageAdapter: MessageAdapter
+    private lateinit var messageList: ArrayList<MessageDto>
+    private lateinit var smsManager: SmsManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversation)
@@ -23,15 +44,51 @@ class ConversationActivity : AppCompatActivity() {
         val color = ColorDrawable(db.getHeaderColor())
         supportActionBar!!.setBackgroundDrawable(color)
 
-        val contactNameView = findViewById<TextView>(R.id.phoneText)
+        messageBox = findViewById(R.id.messageBox)
+        MessageRecyclerView = findViewById(R.id.charRecyclerView)
+        sendButton = findViewById(R.id.sendButton)
+        messageList = ArrayList()
+        messageAdapter = MessageAdapter(this, messageList)
+
+        smsManager = applicationContext.getSystemService(SmsManager::class.java)
+
         firstName = intent.getStringExtra("first_name").toString()
         lastName = intent.getStringExtra("last_name").toString()
         phone = intent.getStringExtra("phone").toString()
 
-        contactNameView.text = firstName
         supportActionBar!!.title = phone
+
+        MessageRecyclerView.layoutManager = LinearLayoutManager(this)
+        MessageRecyclerView.adapter = messageAdapter
+        sendButton.setOnClickListener { onSendBtnClick() }
     }
 
+    private fun hasPermission(permission: String, activity : Activity) =
+        ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED
+
+    private fun askPermission() : Boolean{
+        val notGranted = listOf(
+            android.Manifest.permission.READ_SMS,
+            android.Manifest.permission.SEND_SMS,
+            android.Manifest.permission.RECEIVE_SMS
+        ).filterNot { hasPermission(it, this) }
+        if (notGranted.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, notGranted.toTypedArray(), 0)
+        }
+        return notGranted.isEmpty()
+    }
+    private fun onSendBtnClick() {
+        Toast.makeText(this, "${askPermission()}", Toast.LENGTH_SHORT).show()
+        if(askPermission())
+            return
+        val message = messageBox.text.toString()
+        val messageObject = MessageDto(message, true)
+        if(message.isNotBlank()) {
+            smsManager.sendTextMessage(phone, null, message, null, null)
+            messageBox.setText("")
+            messageList.add(messageObject)
+        }
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.conversation_menu, menu)
         return true

@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ConversationActivity">
 
-        <TextView
-            android:id="@+id/phoneText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0767874585"
-            android:layout_margin="10dp"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="20dp"
-            android:gravity="right"
-            android:layout_alignParentTop="true"
-            />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/charRecyclerView"
         android:layout_width="match_parent"
@@ -48,6 +36,7 @@
                 android:hint="Type a message" />
 
             <ImageView
+                android:id="@+id/sendButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_send"

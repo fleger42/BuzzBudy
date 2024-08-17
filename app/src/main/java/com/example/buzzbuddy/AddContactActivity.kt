@@ -53,12 +53,8 @@ class AddContactActivity : AppCompatActivity() {
             else
             {
                 val user = UserDto(firstNameText, lastNameText, phoneFieldText)
-                val isInserted = db.addUser(user)
+                db.addUser(user)
 
-                if(isInserted)
-                    Toast.makeText(this, "Insert success", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(this, "Failed to add user", Toast.LENGTH_SHORT).show()
                 Intent(this, HomeActivity::class.java).also {
                     startActivity(it)
                 }
