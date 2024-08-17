@@ -39,6 +39,17 @@ class BuzzBudyDatabase(mContext: Context) : SQLiteOpenHelper(
 
     }
 
+    fun addMessage(time: Long): Boolean
+    {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(DATA_LAST_LOG, time)
+
+        val result = db.update(DATA_TABLE_NAME, values, "$DATA_ID=?", arrayOf("1")).toInt()
+        db.close()
+        return result != -1
+    }
+
     fun editLastLog(time: Long): Boolean
     {
         val db = this.writableDatabase

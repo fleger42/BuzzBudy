@@ -1,13 +1,12 @@
 package com.example.buzzbuddy
 
 import android.app.Activity
-import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
+import android.provider.Telephony
+import android.provider.Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX
 import android.telephony.SmsManager
 import android.view.Menu
 import android.view.MenuItem
@@ -60,6 +59,7 @@ class ConversationActivity : AppCompatActivity() {
 
         MessageRecyclerView.layoutManager = LinearLayoutManager(this)
         MessageRecyclerView.adapter = messageAdapter
+        initMessages()
         sendButton.setOnClickListener { onSendBtnClick() }
     }
 
@@ -77,10 +77,31 @@ class ConversationActivity : AppCompatActivity() {
         }
         return notGranted.isEmpty()
     }
+
+    private fun initMessages() {
+        val cursor = contentResolver.query(
+            Telephony.Sms.CONTENT_URI,
+            null,
+            "${Telephony.Sms.ADDRESS} = ?",
+            arrayOf(phone),
+            Telephony.Sms.DATE
+        )
+        cursor?.use {
+            while(cursor.moveToNext()) {
+                //val dateRaw = it.getString(it.getColumnIndexOrThrow(Telephony.Sms.DATE)).toLong()
+                val text = it.getString(it.getColumnIndexOrThrow(Telephony.Sms.BODY))
+                val typeRaw = it.getInt(it.getColumnIndexOrThrow(Telephony.Sms.TYPE))
+                if (typeRaw == MESSAGE_TYPE_INBOX)
+                    messageList.add(MessageDto(text, false))
+                else
+                    messageList.add(MessageDto(text, true))
+            }
+        }
+    }
+
     private fun onSendBtnClick() {
-        Toast.makeText(this, "${askPermission()}", Toast.LENGTH_SHORT).show()
-        if(askPermission())
-            return
+        //Toast.makeText(this, "${askPermission()}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "PASSS", Toast.LENGTH_SHORT).show()
         val message = messageBox.text.toString()
         val messageObject = MessageDto(message, true)
         if(message.isNotBlank()) {
@@ -93,6 +114,7 @@ class ConversationActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.conversation_menu, menu)
         return true
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
