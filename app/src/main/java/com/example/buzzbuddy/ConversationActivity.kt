@@ -1,13 +1,18 @@
 package com.example.buzzbuddy
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
 import android.provider.Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX
 import android.telephony.SmsManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -49,7 +54,7 @@ class ConversationActivity : AppCompatActivity() {
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, messageList)
 
-        smsManager = applicationContext.getSystemService(SmsManager::class.java)
+        smsManager = getSmsManager()
 
         firstName = intent.getStringExtra("first_name").toString()
         lastName = intent.getStringExtra("last_name").toString()
@@ -59,26 +64,34 @@ class ConversationActivity : AppCompatActivity() {
 
         MessageRecyclerView.layoutManager = LinearLayoutManager(this)
         MessageRecyclerView.adapter = messageAdapter
+        SmsReceiver.subscribe(phone, ::onNewMessages)
         initMessages()
         sendButton.setOnClickListener { onSendBtnClick() }
     }
 
-    private fun hasPermission(permission: String, activity : Activity) =
-        ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED
-
-    private fun askPermission() : Boolean{
-        val notGranted = listOf(
-            android.Manifest.permission.READ_SMS,
-            android.Manifest.permission.SEND_SMS,
-            android.Manifest.permission.RECEIVE_SMS
-        ).filterNot { hasPermission(it, this) }
-        if (notGranted.isNotEmpty()) {
-            ActivityCompat.requestPermissions(this, notGranted.toTypedArray(), 0)
-        }
-        return notGranted.isEmpty()
+    private fun onNewMessages(receivedMessages : List<MessageDto>) {
+        messageList.addAll(receivedMessages)
+        MessageRecyclerView.adapter?.notifyItemRangeInserted(
+            messageList.size - receivedMessages.size, // Start position
+            receivedMessages.size
+        )
+        MessageRecyclerView.scrollToPosition(messageList.size - 1)
     }
 
+    override fun onDestroy() {
+        SmsReceiver.unSubscribe(phone)
+        super.onDestroy()
+    }
+
+    private fun getSmsManager() =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            applicationContext.getSystemService(SmsManager::class.java)
+        } else {
+            SmsManager.getDefault()
+        }
+
     private fun initMessages() {
+        Toast.makeText(this, "$phone VS ${db.getOwnerPhone()}", Toast.LENGTH_LONG).show()
         val cursor = contentResolver.query(
             Telephony.Sms.CONTENT_URI,
             null,
@@ -88,22 +101,26 @@ class ConversationActivity : AppCompatActivity() {
         )
         cursor?.use {
             while(cursor.moveToNext()) {
-                //val dateRaw = it.getString(it.getColumnIndexOrThrow(Telephony.Sms.DATE)).toLong()
                 val text = it.getString(it.getColumnIndexOrThrow(Telephony.Sms.BODY))
                 val typeRaw = it.getInt(it.getColumnIndexOrThrow(Telephony.Sms.TYPE))
-                if (typeRaw == MESSAGE_TYPE_INBOX)
-                    messageList.add(MessageDto(text, false))
+                if (typeRaw == Telephony.Sms.MESSAGE_TYPE_INBOX)
+                {
+                    messageList.add(MessageDto(text, false, phone))
+                }
                 else
-                    messageList.add(MessageDto(text, true))
+                {
+                    messageList.add(MessageDto(text, true, db.getOwnerPhone()))
+                    if (phone == db.getOwnerPhone())
+                        messageList.add(MessageDto(text, false, phone))
+                }
             }
         }
+        MessageRecyclerView.scrollToPosition(messageList.size - 1)
     }
 
     private fun onSendBtnClick() {
-        //Toast.makeText(this, "${askPermission()}", Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, "PASSS", Toast.LENGTH_SHORT).show()
         val message = messageBox.text.toString()
-        val messageObject = MessageDto(message, true)
+        val messageObject = MessageDto(message, true, db.getOwnerPhone())
         if(message.isNotBlank()) {
             smsManager.sendTextMessage(phone, null, message, null, null)
             messageBox.setText("")

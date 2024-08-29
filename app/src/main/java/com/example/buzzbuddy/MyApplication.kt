@@ -1,6 +1,8 @@
 package com.example.buzzbuddy;
 import SampleLifecycleListener
 import android.app.Application
+import android.content.IntentFilter
+import android.provider.Telephony
 import androidx.lifecycle.ProcessLifecycleOwner
 
 class MyApplication : Application() {
@@ -10,8 +12,9 @@ class MyApplication : Application() {
     }
 
     override fun onCreate() {
-        super.onCreate()
         setupLifecycleListener()
+        registerReceiver(SmsReceiver, IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION))
+        super.onCreate()
     }
 
     private fun setupLifecycleListener() {

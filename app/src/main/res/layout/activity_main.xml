@@ -45,6 +45,7 @@
         android:hint="@string/phone_hint"
         android:inputType="phone"
         android:paddingLeft="5dp"
+        android:textColor="@color/DarkBlueGreen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />

@@ -39,17 +39,6 @@ class BuzzBudyDatabase(mContext: Context) : SQLiteOpenHelper(
 
     }
 
-    fun addMessage(time: Long): Boolean
-    {
-        val db = this.writableDatabase
-        val values = ContentValues()
-        values.put(DATA_LAST_LOG, time)
-
-        val result = db.update(DATA_TABLE_NAME, values, "$DATA_ID=?", arrayOf("1")).toInt()
-        db.close()
-        return result != -1
-    }
-
     fun editLastLog(time: Long): Boolean
     {
         val db = this.writableDatabase
@@ -83,6 +72,19 @@ class BuzzBudyDatabase(mContext: Context) : SQLiteOpenHelper(
             }
         db.close()
         return time
+    }
+
+    fun getOwnerPhone(): String {
+        var phone = ""
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $DATA_TABLE_NAME"
+        val cursor = db.rawQuery(selectQuery, null)
+        if(cursor != null)
+            if(cursor.moveToFirst()) {
+                phone = cursor.getString(cursor.getColumnIndexOrThrow(DATA_PHONE))
+            }
+        db.close()
+        return phone
     }
 
     fun getHeaderColor(): Int {
