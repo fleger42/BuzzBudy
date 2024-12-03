@@ -25,4 +25,5 @@
     <string name="edit">Modifier</string>
     <string name="conversation">Discussion</string>
     <string name="home">Accueil</string>
+    <string name="invalid_length">Taille invalide</string>
 </resources>

@@ -9,12 +9,26 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.buzzbuddy.data.UserDto
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class EditContactActivity : AppCompatActivity() {
     lateinit var db: BuzzBudyDatabase
+
+    private fun hideSystemBars() {
+        val controller = WindowInsetsControllerCompat(
+            window, window.decorView
+        )
+
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        hideSystemBars()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_contact)
         db = BuzzBudyDatabase(this)
@@ -45,7 +59,14 @@ class EditContactActivity : AppCompatActivity() {
             if (firstNameText.isBlank() || lastNameText.isBlank() || phoneFieldText.isBlank()) {
                 errorView.visibility = View.VISIBLE
                 errorView.text = getString(R.string.empty_field)
-            } else if (!PhoneNumberUtils.isGlobalPhoneNumber(phoneFieldText)) {
+
+            }
+            else if(firstNameText.length >= 12 || lastNameText.length >= 12 || phoneFieldText.length != 10)
+            {
+                errorView.visibility = View.VISIBLE
+                errorView.text = getString(R.string.invalid_length)
+            }
+            else if (!PhoneNumberUtils.isGlobalPhoneNumber(phoneFieldText)) {
                 errorView.visibility = View.VISIBLE
                 errorView.text = getString(R.string.valid_phone)
             } else if (savePhoneNumber != phoneFieldText && db.findUser(phoneFieldText) != null) {

@@ -1,6 +1,5 @@
 import android.content.Context
 import android.icu.util.GregorianCalendar
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner

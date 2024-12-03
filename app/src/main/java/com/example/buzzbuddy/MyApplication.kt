@@ -18,6 +18,6 @@ class MyApplication : Application() {
     }
 
     private fun setupLifecycleListener() {
-        //ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleListener)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleListener)
     }
 }

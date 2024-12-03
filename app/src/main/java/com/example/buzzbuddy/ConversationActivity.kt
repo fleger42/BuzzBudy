@@ -1,26 +1,19 @@
 package com.example.buzzbuddy
 
-import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
-import android.provider.Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX
 import android.telephony.SmsManager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buzzbuddy.adapter.MessageAdapter
@@ -40,7 +33,18 @@ class ConversationActivity : AppCompatActivity() {
     private lateinit var messageList: ArrayList<MessageDto>
     private lateinit var smsManager: SmsManager
 
+    private fun hideSystemBars() {
+        val controller = WindowInsetsControllerCompat(
+            window, window.decorView
+        )
+
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        hideSystemBars()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversation)
         db = BuzzBudyDatabase(this)
@@ -91,7 +95,7 @@ class ConversationActivity : AppCompatActivity() {
         }
 
     private fun initMessages() {
-        Toast.makeText(this, "$phone VS ${db.getOwnerPhone()}", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "$phone VS ${db.getOwnerPhone()}", Toast.LENGTH_LONG)
         val cursor = contentResolver.query(
             Telephony.Sms.CONTENT_URI,
             null,
@@ -121,7 +125,12 @@ class ConversationActivity : AppCompatActivity() {
     private fun onSendBtnClick() {
         val message = messageBox.text.toString()
         val messageObject = MessageDto(message, true, db.getOwnerPhone())
-        if(message.isNotBlank()) {
+        if(message.length > 100)
+        {
+            messageBox.setText("")
+            Toast.makeText(this,R.string.invalid_length, Toast.LENGTH_LONG).show()
+        }
+        else if(message.isNotBlank()) {
             smsManager.sendTextMessage(phone, null, message, null, null)
             messageBox.setText("")
             messageList.add(messageObject)

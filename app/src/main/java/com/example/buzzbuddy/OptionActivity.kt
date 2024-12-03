@@ -4,11 +4,25 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class OptionActivity : AppCompatActivity() {
     lateinit var db: BuzzBudyDatabase
+
+    private fun hideSystemBars() {
+        val controller = WindowInsetsControllerCompat(
+            window, window.decorView
+        )
+
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        hideSystemBars()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_option)
         db = BuzzBudyDatabase(this)

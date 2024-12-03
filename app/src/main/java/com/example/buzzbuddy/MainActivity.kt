@@ -8,13 +8,26 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.buzzbuddy.db.BuzzBudyDatabase
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var db: BuzzBudyDatabase
 
+    private fun hideSystemBars() {
+        val controller = WindowInsetsControllerCompat(
+            window, window.decorView
+        )
+
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        hideSystemBars()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar!!.hide()
@@ -39,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 error.visibility = View.VISIBLE
                 error.text = getString(R.string.insert_phone)
             }
-            else if(!PhoneNumberUtils.isGlobalPhoneNumber(phoneField.text.toString()))
+            else if(!PhoneNumberUtils.isGlobalPhoneNumber(phoneField.text.toString()) || txtPhone.length != 10)
             {
                 error.visibility = View.VISIBLE
                 error.text = getString(R.string.valid_phone)
