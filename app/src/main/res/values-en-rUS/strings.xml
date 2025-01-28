@@ -26,4 +26,5 @@
     <string name="conversation">Conversation</string>
     <string name="home">Home</string>
     <string name="invalid_length">Invalid length</string>
+    <string name="chat_type">Type a message</string>
 </resources>

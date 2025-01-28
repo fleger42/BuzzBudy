@@ -95,7 +95,6 @@ class ConversationActivity : AppCompatActivity() {
         }
 
     private fun initMessages() {
-        Toast.makeText(this, "$phone VS ${db.getOwnerPhone()}", Toast.LENGTH_LONG)
         val cursor = contentResolver.query(
             Telephony.Sms.CONTENT_URI,
             null,

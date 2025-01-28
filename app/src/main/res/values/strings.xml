@@ -26,4 +26,5 @@
     <string name="conversation">Discussion</string>
     <string name="home">Accueil</string>
     <string name="invalid_length">Taille invalide</string>
+    <string name="chat_type">Ecrivez un message</string>
 </resources>

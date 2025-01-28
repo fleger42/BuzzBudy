@@ -76,9 +76,7 @@ class EditContactActivity : AppCompatActivity() {
                 val user = UserDto(changedUserId, firstNameText, lastNameText, phoneFieldText)
                 val isInserted = db.updateUser(user)
 
-                if (isInserted)
-                    Toast.makeText(this, "First name:$firstNameText Last name:$lastNameText Phone number:$phoneFieldText", Toast.LENGTH_LONG).show()
-                else
+                if (!isInserted)
                     Toast.makeText(this, "Failed to add user", Toast.LENGTH_SHORT).show()
                 Intent(this, HomeActivity::class.java).also {
                     startActivity(it)

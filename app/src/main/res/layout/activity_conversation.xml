@@ -33,7 +33,7 @@
                 android:layout_margin="5dp"
                 android:paddingLeft="15dp"
                 android:background="@drawable/message_box_background"
-                android:hint="Type a message" />
+                android:hint="@string/chat_type" />
 
             <ImageView
                 android:id="@+id/sendButton"
